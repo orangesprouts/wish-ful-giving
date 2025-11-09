@@ -12,7 +12,8 @@ import RegistrationSuccess from "./pages/RegistrationSuccess";
 
 
 import NonProfit from "./pages/NonProfit";
-import HowItWorksPage from "./pages/HowItWorks"
+import HowItWorksPage from "./pages/HowItWorks";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/register-organization" element={<RegisterOrganization />} />
           <Route path="/registration-success" element={<RegistrationSuccess />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
