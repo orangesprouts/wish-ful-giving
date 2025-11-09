@@ -9,11 +9,11 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import RegisterOrganization from "./pages/RegisterOrganization";
 import RegistrationSuccess from "./pages/RegistrationSuccess";
-
-
 import NonProfit from "./pages/NonProfit";
 import HowItWorksPage from "./pages/HowItWorks";
 import About from "./pages/About";
+import Wishlist from "./pages/Wishlist"; 
+
 
 const queryClient = new QueryClient();
 
@@ -28,6 +28,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/nonprofits" element={<NonProfit />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/wishlist" element={<Wishlist />} /> {/* Add this route */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="/register-organization" element={<RegisterOrganization />} />
           <Route path="/registration-success" element={<RegistrationSuccess />} />
