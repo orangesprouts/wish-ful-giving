@@ -11,7 +11,6 @@ const Index = () => {
       <main className="flex-1">
         <Hero />
         <FeaturedNonprofits />
-        <HowItWorks />
       </main>
       <Footer />
     </div>

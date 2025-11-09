@@ -9,7 +9,6 @@ const HowItWorksPage = () => {
         <Header />
         <main className="flex-1">
             <HowItWorks />
-            <h1>Test</h1>
         </main>
         <Footer />
         </div>
