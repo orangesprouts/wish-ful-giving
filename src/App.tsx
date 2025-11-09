@@ -14,6 +14,9 @@ import RegistrationSuccess from "./pages/RegistrationSuccess";
 import NonProfit from "./pages/NonProfit";
 import HowItWorksPage from "./pages/HowItWorks";
 import About from "./pages/About";
+import ImpactStories from "./pages/ImpactStories";
+import ShareStory from "./pages/ShareStory";
+import StorySubmissionSuccess from "./pages/StorySubmissionSuccess";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +36,9 @@ const App = () => (
           <Route path="/registration-success" element={<RegistrationSuccess />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/impact" element={<ImpactStories />} />
+          <Route path="/share-story" element={<ShareStory />} />
+          <Route path="/story-submission-success" element={<StorySubmissionSuccess />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
