@@ -31,7 +31,7 @@ const FAQ = () => {
         {
           question: "How do I know the nonprofits are legitimate?",
           answer:
-            "All nonprofits on our platform go through a verification process. We verify their nonprofit status, review their documentation, and ensure they meet our standards before they can create wishlists. You can see verification badges on each nonprofit's profile.",
+            "All nonprofits on our platform go through a verification process. We verify their nonprofit status, review their documentation, and ensure they meet our standards before they can create wishlists.",
         },
       ],
     },
