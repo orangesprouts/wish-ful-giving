@@ -45,4 +45,5 @@ npm run dev
 - TypeScript
 - React
 - shadcn-ui
+
 - Tailwind CSS
