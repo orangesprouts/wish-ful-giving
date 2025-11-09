@@ -3,7 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Heart, MapPin } from "lucide-react";
 
-const nonprofits = [
+const allNonprofits = [
   {
     id: 1,
     name: "Hope Education Center",
@@ -31,6 +31,60 @@ const nonprofits = [
     itemsNeeded: 15,
     category: "Arts & Culture",
   },
+  {
+    id: 4,
+    name: "Green Earth Alliance",
+    location: "Portland, OR",
+    mission: "Protecting the environment through community action and education",
+    completion: 55,
+    itemsNeeded: 20,
+    category: "Environment",
+  },
+  {
+    id: 5,
+    name: "Health & Hope Clinic",
+    location: "Chicago, IL",
+    mission: "Providing free healthcare services to uninsured and low-income families",
+    completion: 70,
+    itemsNeeded: 10,
+    category: "Healthcare",
+  },
+  {
+    id: 6,
+    name: "Housing First Foundation",
+    location: "Seattle, WA",
+    mission: "Helping families find stable housing and rebuild their lives",
+    completion: 45,
+    itemsNeeded: 18,
+    category: "Housing",
+  },
+  {
+    id: 7,
+    name: "Animal Rescue Network",
+    location: "Denver, CO",
+    mission: "Rescuing and rehabilitating abandoned animals and finding them loving homes",
+    completion: 60,
+    itemsNeeded: 14,
+    category: "Animal Welfare",
+  },
+  {
+    id: 8,
+    name: "TechBridge for Seniors",
+    location: "Boston, MA",
+    mission: "Teaching technology skills to seniors to help them stay connected",
+    completion: 50,
+    itemsNeeded: 16,
+    category: "Technology",
+  },
+  {
+    id: 9,
+    name: "Women's Empowerment Hub",
+    location: "Atlanta, GA",
+    mission: "Supporting women through career development and mentorship programs",
+    completion: 75,
+    itemsNeeded: 9,
+    category: "Social Services",
+  },
 ];
 
 interface FeaturedNonprofitsProps {
@@ -38,7 +92,7 @@ interface FeaturedNonprofitsProps {
   description?: string;
 }
 
-export const FeaturedNonprofits = ({ 
+export const BrowseNonprofits = ({ 
   title = "Featured Nonprofits",
   description = "Discover amazing organizations making a difference in their communities"
 }: FeaturedNonprofitsProps = {}) => {
@@ -55,7 +109,7 @@ export const FeaturedNonprofits = ({
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {nonprofits.slice(0, 3).map((org) => (
+          {allNonprofits.map((org) => (
             <Card key={org.id} className="group hover:shadow-soft transition-all duration-300 border-border/50">
               <CardHeader>
                 <div className="flex items-start justify-between mb-2">
