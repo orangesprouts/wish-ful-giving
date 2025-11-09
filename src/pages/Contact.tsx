@@ -21,7 +21,7 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-const Contacts = () => {
+const Contact = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -252,5 +252,5 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default Contact;
 
