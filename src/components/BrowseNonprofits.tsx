@@ -2,90 +2,76 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Heart, MapPin } from "lucide-react";
+import { useState, useEffect } from "react";
 
-const allNonprofits = [
-  {
-    id: 1,
-    name: "Hope Education Center",
-    location: "San Francisco, CA",
-    mission: "Providing educational resources and mentorship to underserved youth",
-    completion: 65,
-    itemsNeeded: 12,
-    category: "Education",
-  },
-  {
-    id: 2,
-    name: "Community Food Bank",
-    location: "Austin, TX",
-    mission: "Fighting hunger by distributing food to families in need",
-    completion: 40,
-    itemsNeeded: 8,
-    category: "Food Security",
-  },
-  {
-    id: 3,
-    name: "Youth Arts Initiative",
-    location: "New York, NY",
-    mission: "Empowering children through creative arts programs",
-    completion: 80,
-    itemsNeeded: 15,
-    category: "Arts & Culture",
-  },
-  {
-    id: 4,
-    name: "Green Earth Alliance",
-    location: "Portland, OR",
-    mission: "Protecting the environment through community action and education",
-    completion: 55,
-    itemsNeeded: 20,
-    category: "Environment",
-  },
-  {
-    id: 5,
-    name: "Health & Hope Clinic",
-    location: "Chicago, IL",
-    mission: "Providing free healthcare services to uninsured and low-income families",
-    completion: 70,
-    itemsNeeded: 10,
-    category: "Healthcare",
-  },
-  {
-    id: 6,
-    name: "Housing First Foundation",
-    location: "Seattle, WA",
-    mission: "Helping families find stable housing and rebuild their lives",
-    completion: 45,
-    itemsNeeded: 18,
-    category: "Housing",
-  },
-  {
-    id: 7,
-    name: "Animal Rescue Network",
-    location: "Denver, CO",
-    mission: "Rescuing and rehabilitating abandoned animals and finding them loving homes",
-    completion: 60,
-    itemsNeeded: 14,
-    category: "Animal Welfare",
-  },
-  {
-    id: 8,
-    name: "TechBridge for Seniors",
-    location: "Boston, MA",
-    mission: "Teaching technology skills to seniors to help them stay connected",
-    completion: 50,
-    itemsNeeded: 16,
-    category: "Technology",
-  },
-  {
-    id: 9,
-    name: "Women's Empowerment Hub",
-    location: "Atlanta, GA",
-    mission: "Supporting women through career development and mentorship programs",
-    completion: 75,
-    itemsNeeded: 9,
-    category: "Social Services",
-  },
-];
+export interface OrganizationData {
+  id?: number;
+  name?: string;
+  location?: string;
+  mission?: string;
+  completion?: number;
+  numitem?: number;
+  user_type?: string;
+  organizationName?: string;
+  city?: string;
+  state?: string;
+  email?: string;
+}
+
+class OrganizationNode {
+  data: OrganizationData;
+  next: OrganizationNode | null;
+
+  constructor(data: OrganizationData) {
+    this.data = data;
+    this.next = null;
+  }
+}
+
+export class OrganizationLinkedList {
+  head: OrganizationNode | null;
+  size: number;
+
+  constructor() {
+    this.head = null;
+    this.size = 0;
+  }
+
+  append(organization: OrganizationData): void {
+    const newNode = new OrganizationNode(organization);
+    
+    if (!this.head) {
+      this.head = newNode;
+    } else {
+      let current = this.head;
+      while (current.next) {
+        current = current.next;
+      }
+      current.next = newNode;
+    }
+    this.size++;
+  }
+
+  // Convert linked list to array for rendering
+  toArray(): OrganizationData[] {
+    const result: OrganizationData[] = [];
+    let current = this.head;
+    let id = 1;
+    while (current) {
+      result.push({
+        ...current.data,
+        id: current.data.id || id++,
+        name: current.data.name || current.data.organizationName,
+        location: current.data.location || `${current.data.city || ''}, ${current.data.state || ''}`.trim(),
+      });
+      current = current.next;
+    }
+    return result;
+  }
+}
+
+// Shared linked list instance
+export const organizationList = new OrganizationLinkedList();
 
 interface FeaturedNonprofitsProps {
   title?: string;
@@ -96,6 +82,35 @@ export const BrowseNonprofits = ({
   title = "Featured Nonprofits",
   description = "Discover amazing organizations making a difference in their communities"
 }: FeaturedNonprofitsProps = {}) => {
+  const [organizations, setOrganizations] = useState<OrganizationData[]>([]);
+
+  // Load organizations from localStorage and populate linked list
+  useEffect(() => {
+    const loadOrganizations = () => {
+      try {
+        // Clear existing list
+        organizationList.head = null;
+        organizationList.size = 0;
+
+        // Load from localStorage (organizations are added here when registered)
+        const storedOrgs = localStorage.getItem('registeredOrganizations');
+        if (storedOrgs) {
+          const orgsArray: OrganizationData[] = JSON.parse(storedOrgs);
+          orgsArray.forEach((org) => {
+            organizationList.append(org);
+          });
+        }
+
+        // Convert linked list to array for rendering
+        setOrganizations(organizationList.toArray());
+      } catch (error) {
+        console.error("Error loading organizations:", error);
+      }
+    };
+
+    loadOrganizations();
+  }, []);
+
   return (
     <section className="py-20 bg-muted/30">
       <div className="container">
@@ -109,12 +124,12 @@ export const BrowseNonprofits = ({
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {allNonprofits.map((org) => (
+          {organizations.map((org) => (
             <Card key={org.id} className="group hover:shadow-soft transition-all duration-300 border-border/50">
               <CardHeader>
                 <div className="flex items-start justify-between mb-2">
                   <div className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
-                    {org.category}
+                    {org.user_type}
                   </div>
                   <Heart className="h-5 w-5 text-muted-foreground hover:text-secondary hover:fill-secondary transition-colors cursor-pointer" />
                 </div>
@@ -138,7 +153,7 @@ export const BrowseNonprofits = ({
                   </div>
                   <Progress value={org.completion} className="h-2" />
                   <p className="text-xs text-muted-foreground">
-                    {org.itemsNeeded} items still needed
+                    {org.numitem} items still needed
                   </p>
                 </div>
 

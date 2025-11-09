@@ -24,6 +24,8 @@ const organizationSchema = z.object({
   city: z.string().min(2, "City must be at least 2 characters"),
   state: z.string().min(2, "State must be at least 2 characters"),
   zipCode: z.string().min(5, "Zip code must be at least 5 characters"),
+  numitem: z.coerce.number().min(1, "Must have at least 1 requested item"),
+  user_type: z.string().min(2, "Type must be at least 2 characters"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
@@ -63,7 +65,8 @@ const RegisterOrganization = () => {
             city: data.city,
             state: data.state,
             zip_code: data.zipCode,
-            user_type: "organization",
+            numitem: data.numitem,
+            user_type: data.user_type,
           },
         },
       });
@@ -73,8 +76,34 @@ const RegisterOrganization = () => {
       }
 
       if (authData.user) {
-        // Optionally, you can create a record in an organizations table here
-        // For now, we're storing organization info in user metadata
+        // Save organization to localStorage for BrowseNonprofits to display
+        const organizationData = {
+          organizationName: data.organizationName,
+          name: data.organizationName,
+          contactFirstName: data.contactFirstName,
+          contactLastName: data.contactLastName,
+          email: data.email,
+          phone: data.phone,
+          address: data.address,
+          city: data.city,
+          state: data.state,
+          zipCode: data.zipCode,
+          location: `${data.city}, ${data.state}`,
+          mission: `${data.organizationName} - Making a difference in ${data.city}`,
+          completion: 0,
+          numitem: data.numitem,
+          user_type: data.user_type,
+        };
+
+        // Get existing organizations from localStorage
+        const storedOrgs = localStorage.getItem('registeredOrganizations');
+        const orgsArray: typeof organizationData[] = storedOrgs ? JSON.parse(storedOrgs) : [];
+        
+        // Add new organization
+        orgsArray.push(organizationData);
+        
+        // Save back to localStorage
+        localStorage.setItem('registeredOrganizations', JSON.stringify(orgsArray));
         
         toast({
           title: "Organization registered successfully",
@@ -223,6 +252,30 @@ const RegisterOrganization = () => {
                     id="zipCode"
                     placeholder="12345"
                     {...register("zipCode")}
+                    className={errors.zipCode ? "border-destructive" : ""}
+                  />
+                  {errors.zipCode && (
+                    <p className="text-sm text-destructive">{errors.zipCode.message}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="items">Item Amount</Label>
+                  <Input
+                    id="items"
+                    placeholder="1"
+                    {...register("numitem")}
+                    className={errors.zipCode ? "border-destructive" : ""}
+                  />
+                  {errors.zipCode && (
+                    <p className="text-sm text-destructive">{errors.zipCode.message}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="user_type">Organization Type</Label>
+                  <Input
+                    id="user_type"
+                    placeholder="General"
+                    {...register("user_type")}
                     className={errors.zipCode ? "border-destructive" : ""}
                   />
                   {errors.zipCode && (
