@@ -27,7 +27,7 @@ export const Header = () => {
 
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" asChild>
-            <Link to="/login">Sign In</Link>
+            <Link to="/login">Login</Link>
           </Button>
           <Button size="sm" className="bg-gradient-warm hover:opacity-90 transition-opacity" asChild>
             <Link to="/signup">Get Started</Link>
