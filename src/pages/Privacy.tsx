@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Shield, Lock, Eye, FileText, Users, Database, Globe } from "lucide-react";
 
-const PrivacyPolicy = () => {
+const Privacy = () => {
   const sections = [
     {
       icon: Database,
@@ -214,5 +214,5 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default Privacy;
 
