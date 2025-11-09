@@ -13,7 +13,9 @@ import NonProfit from "./pages/NonProfit";
 import HowItWorksPage from "./pages/HowItWorks";
 import About from "./pages/About";
 import Wishlist from "./pages/Wishlist"; 
-
+import FAQ from "./pages/FAQ";
+import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
 
 const queryClient = new QueryClient();
 
@@ -29,11 +31,13 @@ const App = () => (
           <Route path="/nonprofits" element={<NonProfit />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/wishlist" element={<Wishlist />} /> {/* Add this route */}
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="/register-organization" element={<RegisterOrganization />} />
-          <Route path="/registration-success" element={<RegistrationSuccess />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
@@ -42,4 +46,3 @@ const App = () => (
 );
 
 export default App;
-
