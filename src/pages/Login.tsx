@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -11,11 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 
-// const Login = () => {
-//   return (
-//     <div className="min-h-screen flex flex-col">
-//       <Header />
-//       <main className="flex-1">
+
       const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -132,12 +129,8 @@ const Login = () => {
                   className="text-primary hover:underline"
                   onClick={(e) => {
                     e.preventDefault();
+                    navigate("/signup");}} 
                     // TODO: Navigate to signup page
-                    toast({
-                      title: "Sign up",
-                      description: "Sign up page coming soon!",
-                    });
-                  }}
                 >
                   Sign up
                 </a>
