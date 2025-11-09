@@ -7,10 +7,6 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
-import RegisterOrganization from "./pages/RegisterOrganization";
-import RegistrationSuccess from "./pages/RegistrationSuccess";
-
-
 import NonProfit from "./pages/NonProfit";
 import HowItWorksPage from "./pages/HowItWorks";
 import About from "./pages/About";
@@ -31,8 +27,6 @@ const App = () => (
           <Route path="/signup" element={<Signup />} />
           <Route path="/register-organization" element={<RegisterOrganization />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="/register-organization" element={<RegisterOrganization />} />
-          <Route path="/registration-success" element={<RegistrationSuccess />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
@@ -43,4 +37,3 @@ const App = () => (
 );
 
 export default App;
-
