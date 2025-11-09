@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 
       const loginSchema = z.object({
@@ -36,23 +37,29 @@ const Login = () => {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API call
-      console.log("Login attempt:", data);
-      
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Login successful",
-        description: "Welcome back!",
+      // Sign in user with Supabase
+      const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
       });
-      
-      // Navigate to home page after successful login
-      navigate("/");
-    } catch (error) {
+
+      if (signInError) {
+        throw signInError;
+      }
+
+      if (authData.user) {
+        toast({
+          title: "Login successful",
+          description: "Welcome back!",
+        });
+        
+        // Navigate to home page after successful login
+        navigate("/");
+      }
+    } catch (error: any) {
       toast({
         title: "Login failed",
-        description: "Invalid email or password. Please try again.",
+        description: error.message || "Invalid email or password. Please try again.",
         variant: "destructive",
       });
     } finally {

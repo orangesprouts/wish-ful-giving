@@ -13,6 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { User, Building2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 
 const signupSchema = z.object({
@@ -44,28 +45,40 @@ const Signup = () => {
   const onSubmit = async (data: SignupFormData) => {
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API call
-      console.log("Signup attempt:", data);
-      
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Account created successfully",
-        description: "Welcome! Your account has been created.",
+      // Sign up user with Supabase
+      const { data: authData, error: signUpError } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            first_name: data.firstName,
+            last_name: data.lastName,
+          },
+        },
       });
-   // Navigate to login page after successful signup
-   navigate("/login");
-  } catch (error) {
-    toast({
-      title: "Signup failed",
-      description: "Something went wrong. Please try again.",
-      variant: "destructive",
-    });
-  } finally {
-    setIsLoading(false);
-  }
-};
+
+      if (signUpError) {
+        throw signUpError;
+      }
+
+      if (authData.user) {
+        toast({
+          title: "Account created successfully",
+          description: "Welcome! Your account has been created. Please check your email to verify your account.",
+        });
+        // Navigate to login page after successful signup
+        navigate("/login");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Signup failed",
+        description: error.message || "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
 return (
   <div className="min-h-screen flex flex-col">

@@ -9,14 +9,16 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import RegisterOrganization from "./pages/RegisterOrganization";
 import RegistrationSuccess from "./pages/RegistrationSuccess";
-
-
 import NonProfit from "./pages/NonProfit";
 import HowItWorksPage from "./pages/HowItWorks";
 import About from "./pages/About";
 import ImpactStories from "./pages/ImpactStories";
 import ShareStory from "./pages/ShareStory";
 import StorySubmissionSuccess from "./pages/StorySubmissionSuccess";
+import Wishlist from "./pages/Wishlist"; 
+import FAQ from "./pages/FAQ";
+import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
 
 const queryClient = new QueryClient();
 
@@ -31,14 +33,17 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/nonprofits" element={<NonProfit />} />
           <Route path="/signup" element={<Signup />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/wishlist" element={<Wishlist />} /> {/* Add this route */}
           <Route path="/register-organization" element={<RegisterOrganization />} />
-          <Route path="/registration-success" element={<RegistrationSuccess />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/impact" element={<ImpactStories />} />
           <Route path="/share-story" element={<ShareStory />} />
           <Route path="/story-submission-success" element={<StorySubmissionSuccess />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
@@ -47,4 +52,3 @@ const App = () => (
 );
 
 export default App;
-
